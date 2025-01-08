@@ -17,8 +17,7 @@ with st.sidebar:
     angle = st.number_input("Angle (°)", 0.0, 90.0, 45.0)
     initial_height = st.number_input("Initial Height (m)", 0.0, 50.0, 0.0)
     gravity = st.number_input("Gravity (m/s²)", 1.0, 20.0, 9.81)
-    mass = st.number_input("Mass (kg)", 0.1, 10.0, 1.0)
-
+    
     show_vectors = st.checkbox("Show Velocity Vectors", value=True)
     compare = st.checkbox("Compare Trajectories")
 
@@ -29,15 +28,7 @@ with st.sidebar:
 
     run_simulation = st.button("Run Simulation")
 
-def calculate_energies(v0, y, m=1):
-    v0y = v0 * sin(radians(angle))
-    vy = v0y - gravity * t
-    vx = v0 * cos(radians(angle))
-    v = np.sqrt(vx**2 + vy**2)
-    Ec = 0.5 * m * v**2
-    Ep = m * gravity * y
-    Em = Ec + Ep
-    return Ec, Ep, Em
+
 
 # Generate the plot only when the button is pressed
 if run_simulation:
@@ -53,9 +44,7 @@ if run_simulation:
         x = v0x * t
         y = initial_height + v0y * t - 0.5 * gravity * t**2
 
-        # Calculate velocities and energies
-        Ec, Ep, Em = calculate_energies(velocity, y, mass)
-
+        
         # Create main plot
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=x, y=y, name='Trajectory 1', line=dict(color='#2563eb', width=2)))
